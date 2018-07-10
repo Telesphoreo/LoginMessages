@@ -33,15 +33,19 @@ public class Command_loginmessages extends BaseCommand
         {
             case "update":
             {
+                if (!sender.hasPermission("loginmessages.update"))
+                {
+                    sender.sendMessage(Messages.MSG_NO_PERMS);
+                    return true;
+                }
                 if (enabled.equalsIgnoreCase("true"))
                 {
-                    if (sender.hasPermission("loginmessages.update"))
-                    {
-                        Updater updater = new Updater(LoginMessages.plugin);
-                        updater.update(sender);
-                        return true;
-                    }
-                } else {
+                    Updater updater = new Updater(LoginMessages.plugin);
+                    updater.update(sender);
+                    return true;
+                }
+                else
+                {
                     sender.sendMessage(Messages.DISABLED);
                 }
                 return true;
