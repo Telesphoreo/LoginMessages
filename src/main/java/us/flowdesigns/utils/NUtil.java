@@ -5,6 +5,8 @@ import org.bukkit.ChatColor;
 
 import java.lang.reflect.Field;
 
+import static us.flowdesigns.loginmessages.LoginMessages.COMPILE_NMS_VERSION;
+
 public class NUtil
 {
     public static String colorize(String string)
@@ -36,5 +38,15 @@ public class NUtil
         while (checkClass.getSuperclass() != Object.class
                 && ((checkClass = checkClass.getSuperclass()) != null));
         return null;
+    }
+    public static void warnVersion()
+    {
+        final String nms = NUtil.getNMSVersion();
+
+        if (!COMPILE_NMS_VERSION.equals(nms))
+        {
+            NLog.warning("LoginMessages is compiled for " + COMPILE_NMS_VERSION + " but the server is running version " + nms + "!");
+            NLog.warning("This might result in unexpected behavior!");
+        }
     }
 }

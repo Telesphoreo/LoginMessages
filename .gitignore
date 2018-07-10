@@ -1,14 +1,8 @@
-# LoginMessages excludes
-build.properties
-git.properties
-
 # Netbeans excludes
 /nbproject/private
 /dist
 /build
 manifest.mf
-# Now defines that Maven CheckStyle is used
-# nb-configuration.xml
 
 # Eclipse excludes
 .project
@@ -32,3 +26,4 @@ manifest.mf
 .Trashes
 ehthumbs.db
 Thumbs.db
+src/test/

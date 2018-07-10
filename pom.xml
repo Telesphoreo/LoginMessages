@@ -5,18 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>us.flowdesigns</groupId>
     <artifactId>LoginMessages</artifactId>
-    <version>1.0.0</version>
+    <version>1.1.0</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <jar.finalName>${project.name}</jar.finalName>
-        <timestamp>${maven.build.timestamp}</timestamp>
-        <maven.build.timestamp.format>MM/dd/yyyy HH:mm</maven.build.timestamp.format>
     </properties>
-    <scm>
-        <connection>scm:git:git@github.com:FuseMinecraft/LoginMessages.git</connection>
-        <developerConnection>scm:git:git@github.com:FuseMinecraft/LoginMessages.git</developerConnection>
-        <url>git@github.com:FuseMinecraft/LoginMessages.git</url>
-    </scm>
 
     <dependencies>
         <dependency>

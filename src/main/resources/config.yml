@@ -1,5 +1,5 @@
 #
-# Login Messages v1.0.0
+# Login Messages v1.1.0
 #
 # There are two sections, ranks and players
 # The ranks are permission based. Some example ranks are already created, but you can
@@ -17,27 +17,28 @@
 # Madgeek1450:
 #   message: "&b%player% is a &6Master-ass-kicker&b."
 #
-login-messages:
-  ranks:
-    Moderator:
-      permission: loginmessages.moderator
-      message: "&b%player% is a &d&oModerator"
-    Admin:
-      permission: loginmessages.admin
-      message: "&b%player% is an &4&oAdmin"
-    Builder:
-      permission: loginmessages.builder
-      message: "&b%player% is a &oBuilder"
-    Developer:
-      permission: loginmessages.developer
-      message: "&b%player% is a &5&oDeveloper"
-    Owner:
-      permission: loginmessages.owner
-      message: "&b%player% is the &4&oOwner"
-  players:
-    handleDisconnect:
-      message: "&b%player% is the &9&oCreator of LoginMessages"
-    yashi4554:
-      message: "&b%player% is an &4&oAdmin&b and the &9The Supreme Builder"
-    OxLemonxO:
-      message: "&b%player% is the &4Ki&5ng &6Of &5Le&6mo&7ns&b!"
+ranks:
+  Moderator:
+    permission: loginmessages.moderator
+    message: "&b%player% is a &d&oModerator"
+  Admin:
+    permission: loginmessages.admin
+    message: "&b%player% is an &4&oAdmin"
+  Builder:
+    permission: loginmessages.builder
+    message: "&b%player% is a &oBuilder"
+  Developer:
+    permission: loginmessages.developer
+    message: "&b%player% is a &5&oDeveloper"
+  Owner:
+    permission: loginmessages.owner
+    message: "&b%player% is the &4&oOwner"
+players:
+  handleDisconnect:
+    message: "&b%player% is the &9&oCreator of LoginMessages"
+  yashi4554:
+    message: "&b%player% is an &4&oAdmin&b and the &9The Supreme Builder"
+  OxLemonxO:
+    message: "&b%player% is the &4Ki&5ng &6Of &5Le&6mo&7ns&b!"
+# Should LoginMessages check for updates automatically?
+enable_updater: 'true'

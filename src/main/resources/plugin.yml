@@ -1,9 +1,9 @@
 name: LoginMessages
-version: 1.0.0
-description: A simple plugin to give users Login Messages
+version: 1.1.0
+description: A simple, lightweight plugin to easily create login messages
 author: handleDisconnect
 main: us.flowdesigns.loginmessages.LoginMessages
 commands:
   loginmessages:
-    usage: /<command> [reload]
-    description: Shows information or reloads LoginMessages
+    usage: /<command> [reload | update]
+    description: Shows information about or reloads LoginMessages

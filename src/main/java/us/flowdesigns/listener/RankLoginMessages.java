@@ -29,14 +29,14 @@ public class RankLoginMessages implements Listener
         Player player = event.getPlayer();
         try
         {
-            Map<String, Object> login_messages = plugin.getConfig().getConfigurationSection("login-messages.ranks").getValues(false);
-            Map<String, Object> player_login_messages = plugin.getConfig().getConfigurationSection("login-messages.players").getValues(false);
+            Map<String, Object> login_messages = plugin.getConfig().getConfigurationSection("ranks").getValues(false);
+            Map<String, Object> player_login_messages = plugin.getConfig().getConfigurationSection("players").getValues(false);
             for (String key : login_messages.keySet())
             {
                 MemorySection login = (MemorySection) login_messages.get(key);
                 String permission = (String) login.get("permission");
                 String message = (String) login.get("message");
-                if (RankLoginMessages.this.hasPermission(player, permission) && !player_login_messages.keySet().contains(player.getName()))
+                if (hasPermission(player, permission) && !player_login_messages.keySet().contains(player.getName()))
                 {
                     Bukkit.broadcastMessage(NUtil.colorize(message.replace("%player%", player.getName())));
                 }
