@@ -9,7 +9,7 @@ import us.flowdesigns.loginmessages.Updater;
 import us.flowdesigns.utils.NLog;
 
 @CommandPermissions(source = SourceType.BOTH)
-@CommandParameters(description = "Shows information about or reloads LoginMessages", usage = "/<command> [reload | update]")
+@CommandParameters(description = "Shows information about, reload, or update LoginMessages", usage = "/<command> [reload | update]")
 public class Command_loginmessages extends BaseCommand
 {
     @Override

@@ -6,4 +6,4 @@ main: us.flowdesigns.loginmessages.LoginMessages
 commands:
   loginmessages:
     usage: /<command> [reload | update]
-    description: Shows information about or reloads LoginMessages
+    description: Shows information about, reload, or update LoginMessages
