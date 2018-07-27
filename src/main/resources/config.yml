@@ -1,7 +1,7 @@
 #
-# Login Messages v1.1.1
+# Login Messages v1.2.0
 #
-# There are two sections, ranks and players
+# There are two sections: ranks and players
 # The ranks are permission based. Some example ranks are already created, but you can
 # change these to your likings. Use %player% to display their name when they log in.
 #
