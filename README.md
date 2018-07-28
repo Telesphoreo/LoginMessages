@@ -3,13 +3,14 @@ LoginMessages is a simple plugin that allows you to create custom login messages
 LoginMessages v1.2.1 is confirmed to run on Minecraft versions 1.8 to 1.13.
 
 To add a rank based login message:
-  Rankname:
+
+  `Rankname:
     permission: your.permission.here
-    message: &bAnything can go here. &cColor codes are supported! &3%player% is where you want the playername to go"
+    message: &bAnything can go here. &cColor codes are supported! &3%player% is where you want the playername to go"`
 
 To add a usernamed based login message:
-  username:
-    message: &bAnything can go here. &cColor codes are supported! &3%player% is where you want the playername to go"
+  `username:
+    message: &bAnything can go here. &cColor codes are supported! &3%player% is where you want the playername to go"`
 
 Commands and Permissions:
 /loginmessages - Shows information and help about LoginMessages
