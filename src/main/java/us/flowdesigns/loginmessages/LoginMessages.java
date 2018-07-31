@@ -38,6 +38,7 @@ public class LoginMessages extends JavaPlugin
         server.getPluginManager().registerEvents(new PlayerLoginMessages(), LoginMessages.plugin);
         server.getPluginManager().registerEvents(new RankLoginMessages(), LoginMessages.plugin);
         server.getPluginManager().registerEvents(new UpdateChecker(), LoginMessages.plugin);
+        Metrics metrics = new Metrics(this);
         Config.loadConfigs();
         new BukkitRunnable()
         {

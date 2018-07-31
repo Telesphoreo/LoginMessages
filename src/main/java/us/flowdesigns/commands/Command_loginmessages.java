@@ -18,7 +18,7 @@ public class Command_loginmessages extends BaseCommand
         String enabled = LoginMessages.plugin.getConfig().getString("enable_updater");
         if (args.length == 0)
         {
-            sender.sendMessage(ChatColor.GOLD + plugin.getName() + " v" + plugin.getDescription().getVersion() + " by: handleDisconnect");
+            sender.sendMessage(ChatColor.GOLD + plugin.getName() + " v" + plugin.getDescription().getVersion() + " by: Model_3");
             if (sender.hasPermission("loginmessages.reload"))
             {
                 sender.sendMessage(ChatColor.GREEN + "Type /loginmessages reload to reload the configuration file");
