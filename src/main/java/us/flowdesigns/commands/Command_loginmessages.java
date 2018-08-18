@@ -15,7 +15,7 @@ public class Command_loginmessages extends BaseCommand
     @Override
     public boolean run(final CommandSender sender, final Player sender_p, final Command cmd, final String commandLabel, final String[] args, final boolean senderIsConsole)
     {
-        String enabled = LoginMessages.plugin.getConfig().getString("enable_updater");
+        boolean enabled = LoginMessages.plugin.getConfig().getBoolean("enable_updater");
         if (args.length == 0)
         {
             sender.sendMessage(ChatColor.GOLD + plugin.getName() + " v" + plugin.getDescription().getVersion() + " by: Model_3");
@@ -23,7 +23,7 @@ public class Command_loginmessages extends BaseCommand
             {
                 sender.sendMessage(ChatColor.GREEN + "Type /loginmessages reload to reload the configuration file");
             }
-            if (sender.hasPermission("loginmessages.update") && enabled.equalsIgnoreCase("true"))
+            if (sender.hasPermission("loginmessages.update") && enabled)
             {
                 sender.sendMessage(ChatColor.GREEN + "Type /loginmessages update to update LoginMessages");
             }
@@ -38,7 +38,7 @@ public class Command_loginmessages extends BaseCommand
                     sender.sendMessage(Messages.MSG_NO_PERMS);
                     return true;
                 }
-                if (enabled.equalsIgnoreCase("true"))
+                if (enabled)
                 {
                     Updater updater = new Updater(LoginMessages.plugin);
                     updater.update(sender);
@@ -59,6 +59,7 @@ public class Command_loginmessages extends BaseCommand
                 }
                 try
                 {
+                    plugin.isConfigOutOfDate();
                     LoginMessages.plugin.reloadConfig();
                     sender.sendMessage(Messages.RELOADED);
                     return true;

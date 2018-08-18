@@ -1,5 +1,5 @@
 #
-# Login Messages v1.2.1
+# Login Messages v1.3.0
 #
 # There are two sections: ranks and players
 # The ranks are permission based. Some example ranks are already created, but you can
@@ -35,10 +35,14 @@ ranks:
     message: "&b%player% is the &4&oOwner"
 players:
   Model_3:
-    message: "&b%player% is the &9&oCreator of LoginMessages"
+    message: "&bThe %player% it's in the?"
   yashi4554:
     message: "&b%player% is an &4&oAdmin&b and the &9The Supreme Builder"
   OxLemonxO:
     message: "&b%player% is the &4Ki&5ng &6Of &5Le&6mo&7ns&b!"
+
+# Should the vanilla "joined the game" message show?
+show_vanilla_messages: false
+
 # Should LoginMessages check for updates automatically?
-enable_updater: 'true'
+enable_updater: true

@@ -15,35 +15,34 @@ import java.util.Map;
 
 import static us.flowdesigns.loginmessages.LoginMessages.plugin;
 
-public class RankLoginMessages implements Listener
-{
-    boolean hasPermission(Player player, String permission)
-    {
+public class RankLoginMessages implements Listener {
+    boolean hasPermission(Player player, String permission) {
         Permission p = new Permission(permission, PermissionDefault.FALSE);
         return player.hasPermission(p);
     }
 
     @EventHandler
-    public boolean onPlayerJoin(PlayerJoinEvent event)
-    {
+    public boolean onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
-        try
-        {
+        try {
             Map<String, Object> login_messages = plugin.getConfig().getConfigurationSection("ranks").getValues(false);
             Map<String, Object> player_login_messages = plugin.getConfig().getConfigurationSection("players").getValues(false);
-            for (String key : login_messages.keySet())
-            {
+            boolean vanilla_join_msg = plugin.getConfig().getBoolean("show_vanilla_messages");
+            for (String key : login_messages.keySet()) {
                 MemorySection login = (MemorySection) login_messages.get(key);
                 String permission = (String) login.get("permission");
                 String message = (String) login.get("message");
-                if (hasPermission(player, permission) && !player_login_messages.keySet().contains(player.getName()))
-                {
-                    Bukkit.broadcastMessage(NUtil.colorize(message.replace("%player%", player.getName())));
+                if (hasPermission(player, permission) && !player_login_messages.keySet().contains(player.getName())) {
+                    if (!vanilla_join_msg) {
+                        // Set the join message
+                        event.setJoinMessage(NUtil.colorize(message.replace("%player%", player.getName())));
+                    } else {
+                        // Just broadcast it instead
+                        Bukkit.broadcastMessage(NUtil.colorize(message.replace("%player%", player.getName())));
+                    }
                 }
             }
-        }
-        catch (ClassCastException ex)
-        {
+        } catch (ClassCastException ex) {
             NLog.severe("Failed to load login messages.");
             NLog.severe(ex);
         }

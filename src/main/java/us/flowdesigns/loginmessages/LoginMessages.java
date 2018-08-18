@@ -40,6 +40,12 @@ public class LoginMessages extends JavaPlugin
         server.getPluginManager().registerEvents(new UpdateChecker(), LoginMessages.plugin);
         Metrics metrics = new Metrics(this);
         Config.loadConfigs();
+        // Wait one second before checking if it is out of date
+        plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
+            public void run() {
+                isConfigOutOfDate();
+            }
+        }, 0, 20);
         new BukkitRunnable()
         {
             @Override
@@ -60,5 +66,26 @@ public class LoginMessages extends JavaPlugin
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args)
     {
         return CMD_Handler.handleCommand(sender, cmd, commandLabel, args);
+    }
+
+    public void isConfigOutOfDate()
+    {
+        boolean updated = false;
+        if (!plugin.getConfig().isSet("show_vanilla_messages")) {
+            NLog.info("Unable to find configuration entry: show_vanilla_messages! Creating new entry with default value");
+            plugin.getConfig().set("show_vanilla_messages", false);
+            LoginMessages.plugin.saveConfig();
+            updated = true;
+        }
+        if (!plugin.getConfig().isSet("enable_updater")) {
+            NLog.info("Unable to find configuration entry: enable_updater! Creating new entry with default value");
+            plugin.getConfig().set("enable_updater", true);
+            LoginMessages.plugin.saveConfig();
+            updated = true;
+        }
+        if (updated)
+        {
+            NLog.info("Configuration file has been successfully updated!");
+        }
     }
 }

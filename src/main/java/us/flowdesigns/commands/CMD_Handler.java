@@ -1,6 +1,5 @@
 package us.flowdesigns.commands;
 
-import org.apache.commons.lang.StringUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -12,7 +11,7 @@ import us.flowdesigns.utils.NLog;
 
 public class CMD_Handler
 {
-    public static final String COMMAND_PATH = BaseCommand.class.getPackage().getName(); // "com.packsnetwork.packscore.commands"
+    public static final String COMMAND_PATH = BaseCommand.class.getPackage().getName();
     public static final String COMMAND_PREFIX = "Command_";
 
     public static boolean handleCommand(CommandSender sender, Command cmd, String commandLabel, String[] args)
@@ -29,11 +28,6 @@ public class CMD_Handler
         {
             senderIsConsole = true;
             playerSender = null;
-
-            NLog.info(String.format("[CONSOLE_COMMAND] %s: /%s %s",
-                    sender.getName(),
-                    commandLabel,
-                    StringUtils.join(args, " ")), true);
         }
 
         final BaseCommand dispatcher;

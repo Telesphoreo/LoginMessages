@@ -3,7 +3,7 @@ package us.flowdesigns.commands;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
-//Credit to TF
+// Credit to TF
 
 @Retention(RetentionPolicy.RUNTIME)
 public @interface CommandParameters
