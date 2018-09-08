@@ -9,5 +9,6 @@ import java.lang.annotation.RetentionPolicy;
 public @interface CommandPermissions
 {
     SourceType source();
+
     boolean blockHostConsole() default false;
 }

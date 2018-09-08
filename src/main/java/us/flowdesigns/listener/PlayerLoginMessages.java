@@ -13,29 +13,39 @@ import java.util.Map;
 
 import static us.flowdesigns.loginmessages.LoginMessages.plugin;
 
-public class PlayerLoginMessages implements Listener {
+public class PlayerLoginMessages implements Listener
+{
     @EventHandler
-    public boolean onPlayerJoin(PlayerJoinEvent event) {
+    public boolean onPlayerJoin(PlayerJoinEvent event)
+    {
         Player player = event.getPlayer();
-        try {
+        try
+        {
             Map<String, Object> player_login_messages = plugin.getConfig().getConfigurationSection("players").getValues(false);
             boolean vanilla_join_msg = plugin.getConfig().getBoolean("show_vanilla_messages");
 
-            for (String playerKeys : player_login_messages.keySet()) {
-                MemorySection login = (MemorySection) player_login_messages.get(playerKeys);
-                String message = (String) login.get("message");
-                if (player_login_messages.keySet().contains(player.getName())) {
-                    if (!vanilla_join_msg) {
+            for (String playerKeys : player_login_messages.keySet())
+            {
+                MemorySection login = (MemorySection)player_login_messages.get(playerKeys);
+                String message = (String)login.get("message");
+                if (player_login_messages.keySet().contains(player.getName()))
+                {
+                    if (!vanilla_join_msg)
+                    {
                         // Set the join message
                         event.setJoinMessage(NUtil.colorize(message.replace("%player%", player.getName())));
-                    } else {
+                    }
+                    else
+                    {
                         // Just broadcast it instead
                         Bukkit.broadcastMessage(NUtil.colorize(message.replace("%player%", player.getName())));
                     }
                     return true;
                 }
             }
-        } catch (ClassCastException ex) {
+        }
+        catch (ClassCastException ex)
+        {
             NLog.severe("Failed to load login messages.");
             NLog.severe(ex);
         }

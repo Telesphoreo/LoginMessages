@@ -19,7 +19,8 @@ import java.util.regex.Pattern;
 
 import static org.bukkit.Bukkit.getServer;
 
-public class UpdateChecker implements Listener {
+public class UpdateChecker implements Listener
+{
     PluginManager pm = getServer().getPluginManager();
     Plugin p = pm.getPlugin("LoginMessages");
     PluginDescriptionFile pdf = p.getDescription();
@@ -28,28 +29,33 @@ public class UpdateChecker implements Listener {
     private Plugin plugin;
 
     @EventHandler
-    public boolean onPlayerJoin(PlayerJoinEvent event) throws IOException {
+    public boolean onPlayerJoin(PlayerJoinEvent event) throws IOException
+    {
         boolean enabled = LoginMessages.plugin.getConfig().getBoolean("enable_updater");
-        if (enabled && event.getPlayer().hasPermission("loginmessages.update") || event.getPlayer().isOp()) {
+        if (enabled && event.getPlayer().hasPermission("loginmessages.update") || event.getPlayer().isOp())
+        {
             URL url = new URL(versionLink);
             URLConnection con = url.openConnection();
             InputStreamReader isr = new InputStreamReader(con.getInputStream());
             BufferedReader reader = new BufferedReader(isr);
             reader.ready();
             int newVersion = this.getVersionFromString(reader.readLine());
-            if (newVersion > version) {
+            if (newVersion > version)
+            {
                 event.getPlayer().sendMessage(ChatColor.RED + "There is an update available for LoginMessages. To update LoginMessages, type /loginmessages update");
             }
         }
         return true;
     }
 
-    public int getVersionFromString(String from) {
+    public int getVersionFromString(String from)
+    {
         String result = "";
         Pattern pattern = Pattern.compile("\\d+");
         Matcher matcher = pattern.matcher(from);
 
-        while (matcher.find()) {
+        while (matcher.find())
+        {
             result += matcher.group();
         }
 

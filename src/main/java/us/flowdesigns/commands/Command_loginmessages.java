@@ -19,6 +19,7 @@ public class Command_loginmessages extends BaseCommand
         if (args.length == 0)
         {
             sender.sendMessage(ChatColor.GOLD + plugin.getName() + " v" + plugin.getDescription().getVersion() + " by: Model_3");
+            sender.sendMessage(ChatColor.GOLD + "Designed for: " + ChatColor.BLUE + "Spigot 1.13.1");
             if (sender.hasPermission("loginmessages.reload"))
             {
                 sender.sendMessage(ChatColor.GREEN + "Type /loginmessages reload to reload the configuration file");

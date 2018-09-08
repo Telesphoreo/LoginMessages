@@ -31,7 +31,7 @@ public abstract class BaseCommand
         this.commandClass = commandClass;
     }
 
-  
+
     public Player getPlayer(final String partialName)
     {
         return getPlayer(partialName, false);
@@ -68,7 +68,7 @@ public abstract class BaseCommand
                 return player;
             }
         }
-        
+
         for (final Player player : players)
         {
             if (player.getDisplayName().toLowerCase().contains(partialName.toLowerCase()))
