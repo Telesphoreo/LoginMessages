@@ -3,6 +3,7 @@
 /dist
 /build
 manifest.mf
+dependency-reduced-pom.xml
 
 # Eclipse excludes
 .project
@@ -27,3 +28,4 @@ manifest.mf
 ehthumbs.db
 Thumbs.db
 src/test/
+src/main/resources/build.properties

@@ -1,12 +1,14 @@
-package us.flowdesigns.loginmessages;
+package me.telesphoreo.loginmessages;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.EnumMap;
+import java.util.Map;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
-
-import java.io.*;
-import java.util.EnumMap;
-import java.util.Map;
 
 public class Config
 {
@@ -130,7 +132,7 @@ public class Config
         /**
          * Gets the file associated with the enum.
          *
-         * @return File associated wiht the enum
+         * @return File associated with the enum
          */
         public String getFile()
         {

@@ -1,4 +1,4 @@
-package us.flowdesigns.utils;
+package me.telesphoreo.utils;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;

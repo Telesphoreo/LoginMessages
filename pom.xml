@@ -5,38 +5,205 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>us.flowdesigns</groupId>
     <artifactId>LoginMessages</artifactId>
-    <version>1.3.1</version>
+    <version>1.4.0</version>
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <build.codename>Asteroid</build.codename>
         <jar.finalName>${project.name}</jar.finalName>
+        <timestamp>${maven.build.timestamp}</timestamp>
+        <maven.build.timestamp.format>MM/dd/yyyy HH:mm</maven.build.timestamp.format>
     </properties>
+
+    <scm>
+        <connection>scm:git:git@github.com:Telesphoreo/LoginMessages.git</connection>
+        <developerConnection>scm:git:git@github.com:Telesphoreo/LoginMessages.git</developerConnection>
+        <url>git@github.com:Telesphoreo/LoginMessages.git</url>
+    </scm>
+
+    <repositories>
+        <repository>
+            <id>nms-repo</id>
+            <url>https://repo.codemc.org/repository/nms/</url>
+        </repository>
+
+        <repository>
+            <id>CodeMC</id>
+            <url>https://repo.codemc.org/repository/maven-public</url>
+        </repository>
+    </repositories>
 
     <dependencies>
         <dependency>
             <groupId>org.bukkit</groupId>
             <artifactId>bukkit</artifactId>
-            <version>1.13.1-R0.1-SNAPSHOT</version>
+            <version>1.13.2-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>org.bstats</groupId>
+            <artifactId>bstats-bukkit</artifactId>
+            <version>1.4</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
+
     <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+
         <plugins>
+            <!-- Compile Plugin !-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.7.0</version>
+                <version>3.8.0</version>
                 <configuration>
                     <outputFileName>LoginMessages.jar</outputFileName>
                     <source>1.8</source>
                     <target>1.8</target>
                 </configuration>
             </plugin>
+
+            <!-- Shade !-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.1.0</version>
+                <configuration>
+                    <relocations>
+                        <relocation>
+                            <pattern>org.bstats</pattern>
+                            <shadedPattern>me.telesphoreo.loginmessages</shadedPattern>
+                        </relocation>
+                    </relocations>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Git describe !-->
+            <plugin>
+                <groupId>pl.project13.maven</groupId>
+                <artifactId>git-commit-id-plugin</artifactId>
+                <version>2.2.5</version>
+                <executions>
+                    <execution>
+                        <id>get-the-git-infos</id>
+                        <goals>
+                            <goal>revision</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>validate-the-git-infos</id>
+                        <goals>
+                            <goal>validateRevision</goal>
+                        </goals>
+                        <phase>package</phase>
+                    </execution>
+                </executions>
+                <configuration>
+                    <dotGitDirectory>${project.basedir}/.git</dotGitDirectory>
+                    <prefix>git</prefix>
+                    <dateFormat>yyyy-MM-dd'T'HH:mm:ssZ</dateFormat>
+                    <verbose>false</verbose>
+                    <format>properties</format>
+                    <failOnNoGitDirectory>true</failOnNoGitDirectory>
+                    <failOnUnableToExtractRepoInfo>false</failOnUnableToExtractRepoInfo>
+                    <includeOnlyProperties>
+                        <includeOnlyProperty>git.commit.id.abbrev</includeOnlyProperty>
+                    </includeOnlyProperties>
+                    <gitDescribe>
+                        <skip>false</skip>
+                        <always>false</always>
+                        <abbrev>7</abbrev>
+                        <dirty>-dirty</dirty>
+                        <match>*</match>
+                    </gitDescribe>
+                </configuration>
+            </plugin>
+
+            <!-- Antrun -->
+            <plugin>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>1.8</version>
+                <executions>
+                    <execution>
+                        <phase>initialize</phase>
+                        <configuration>
+                            <target>
+                                <propertyfile file="${basedir}/src/main/resources/build.properties"
+                                              comment="Build information. Edit this to your liking.">
+                                    <entry key="buildAuthor" default="unknown"/>
+                                    <entry key="buildNumber" default="0"/>
+                                    <entry key="buildCodename" value="${build.codename}"/>
+                                    <entry key="buildVersion" value="${project.version}"/>
+                                    <entry key="buildDate" value="${timestamp}"/>
+                                    <!--suppress UnresolvedMavenProperty -->
+                                    <entry key="buildHead" value="${git.commit.id.abbrev}"/>
+                                </propertyfile>
+                            </target>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Properties -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>properties-maven-plugin</artifactId>
+                <version>1.0.0</version>
+                <executions>
+                    <execution>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>read-project-properties</goal>
+                        </goals>
+                        <configuration>
+                            <files>
+                                <file>${project.basedir}/src/main/resources/build.properties</file>
+                            </files>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Buildnumber -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>buildnumber-maven-plugin</artifactId>
+                <version>1.4</version>
+                <executions>
+                    <execution>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>create</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <buildNumberPropertyName>maven.buildnumber</buildNumberPropertyName>
+                    <buildNumberPropertiesFileLocation>${project.basedir}/src/main/resources/build.properties
+                    </buildNumberPropertiesFileLocation>
+                    <format>{0,number,#}</format>
+                    <items>
+                        <item>buildNumber</item>
+                    </items>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
-    <repositories>
-        <repository>
-            <id>spigot-repo</id>
-            <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
-        </repository>
-    </repositories>
 </project>

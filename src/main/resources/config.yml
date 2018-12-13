@@ -1,5 +1,5 @@
 #
-# Login Messages v1.3.1
+# Login Messages v1.4.0
 #
 # There are two sections: ranks and players
 # The ranks are permission based. Some example ranks are already created, but you can
@@ -43,6 +43,3 @@ players:
 
 # Should the vanilla "joined the game" message show?
 show_vanilla_messages: false
-
-# Should LoginMessages check for updates automatically?
-enable_updater: true

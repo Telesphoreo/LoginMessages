@@ -1,8 +1,7 @@
-package us.flowdesigns.utils;
-
-import org.bukkit.ChatColor;
+package me.telesphoreo.utils;
 
 import java.lang.reflect.Field;
+import org.bukkit.ChatColor;
 
 public class NUtil
 {

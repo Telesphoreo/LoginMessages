@@ -1,19 +1,26 @@
-package us.flowdesigns.commands;
-
-import org.bukkit.Bukkit;
-import org.bukkit.command.*;
-import org.bukkit.plugin.Plugin;
-import us.flowdesigns.loginmessages.LoginMessages;
-import us.flowdesigns.utils.NLog;
-import us.flowdesigns.utils.NUtil;
+package me.telesphoreo.commands;
 
 import java.io.IOException;
 import java.security.CodeSource;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
+import me.telesphoreo.loginmessages.LoginMessages;
+import org.bukkit.Bukkit;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandException;
+import org.bukkit.command.CommandMap;
+import org.bukkit.command.CommandSender;
+import org.bukkit.command.PluginIdentifiableCommand;
+import org.bukkit.plugin.Plugin;
+import me.telesphoreo.utils.NLog;
+import me.telesphoreo.utils.NUtil;
 
 // Credit to TF
 

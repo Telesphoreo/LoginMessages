@@ -1,12 +1,11 @@
-package us.flowdesigns.commands;
+package me.telesphoreo.commands;
 
+import java.util.Collection;
+import me.telesphoreo.loginmessages.LoginMessages;
 import org.bukkit.Server;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import us.flowdesigns.loginmessages.LoginMessages;
-
-import java.util.Collection;
 
 // Credit to TF
 
