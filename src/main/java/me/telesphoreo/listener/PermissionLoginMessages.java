@@ -2,6 +2,7 @@ package me.telesphoreo.listener;
 
 import java.util.Map;
 import me.telesphoreo.loginmessages.LoginMessages;
+import me.telesphoreo.loginmessages.NLog;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.MemorySection;
 import org.bukkit.entity.Player;
@@ -10,8 +11,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;
-import me.telesphoreo.utils.NLog;
-import me.telesphoreo.utils.NUtil;
 
 public class PermissionLoginMessages implements Listener
 {
@@ -40,12 +39,12 @@ public class PermissionLoginMessages implements Listener
                     if (!vanilla_join_msg)
                     {
                         // Set the join message
-                        event.setJoinMessage(NUtil.colorize(message.replace("%player%", player.getName())));
+                        event.setJoinMessage(LoginMessages.colorize(message.replace("%player%", player.getName())));
                     }
                     else
                     {
                         // Just broadcast it instead
-                        Bukkit.broadcastMessage(NUtil.colorize(message.replace("%player%", player.getName())));
+                        Bukkit.broadcastMessage(LoginMessages.colorize(message.replace("%player%", player.getName())));
                     }
                 }
             }

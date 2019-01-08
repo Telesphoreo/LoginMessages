@@ -2,17 +2,18 @@ package me.telesphoreo.loginmessages;
 
 import java.io.InputStream;
 import java.util.Properties;
+import me.telesphoreo.commands.CMD_Handler;
+import me.telesphoreo.commands.CMD_Loader;
+import me.telesphoreo.listener.PermissionLoginMessages;
+import me.telesphoreo.listener.PlayerLoginMessages;
 import org.bstats.bukkit.Metrics;
+import org.bukkit.ChatColor;
 import org.bukkit.Server;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
-import me.telesphoreo.commands.CMD_Handler;
-import me.telesphoreo.commands.CMD_Loader;
-import me.telesphoreo.listener.PlayerLoginMessages;
-import me.telesphoreo.listener.PermissionLoginMessages;
-import me.telesphoreo.utils.NLog;
 
 public class LoginMessages extends JavaPlugin
 {
@@ -37,7 +38,7 @@ public class LoginMessages extends JavaPlugin
     @Override
     public void onEnable()
     {
-        build.load(LoginMessages.plugin);
+        build.load(plugin);
         server.getPluginManager().registerEvents(new PlayerLoginMessages(), LoginMessages.plugin);
         server.getPluginManager().registerEvents(new PermissionLoginMessages(), LoginMessages.plugin);
         new Metrics(this);
@@ -81,15 +82,47 @@ public class LoginMessages extends JavaPlugin
         boolean updated = false;
         if (!plugin.getConfig().isSet("show_vanilla_messages"))
         {
-            NLog.info("Unable to find configuration entry: show_vanilla_messages! Creating new entry with default value");
+            NLog.info("Unable to find valid configuration entry: show_vanilla_messages! Creating new entry with default value");
             plugin.getConfig().set("show_vanilla_messages", false);
-            LoginMessages.plugin.saveConfig();
+            plugin.saveConfig();
+            plugin.reloadConfig();
             updated = true;
         }
         if (updated)
         {
             NLog.info("Configuration file has been successfully updated!");
         }
+    }
+
+    public void setLoginMessage(Player player, String message)
+    {
+        if (plugin.getConfig().get("players." + player.getName()) == null)
+        {
+            plugin.getConfig().createSection("players." + player.getName());
+        }
+        player.sendMessage(ChatColor.GRAY + "Your login message is now:");
+        player.sendMessage(ChatColor.GRAY + "> " + ChatColor.RESET + colorize(message.replace("%player%", player.getName())));
+        plugin.getConfig().set("players." + player.getName() + ".message", message);
+        plugin.saveConfig();
+        plugin.reloadConfig();
+    }
+
+    public void deleteLoginMessage(Player player)
+    {
+        if (plugin.getConfig().get("players." + player.getName()) == null)
+        {
+            player.sendMessage(ChatColor.RED + "You do not have a login message set.");
+            return;
+        }
+        player.sendMessage(ChatColor.GRAY + "Your login message has been removed.");
+        plugin.getConfig().set("players." + player.getName(), null);
+        plugin.saveConfig();
+        plugin.reloadConfig();
+    }
+
+    public static String colorize(String string)
+    {
+        return ChatColor.translateAlternateColorCodes('&', string);
     }
 
     public static class BuildProperties

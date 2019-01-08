@@ -11,7 +11,6 @@ import java.net.URL;
 import java.net.URLConnection;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
-import me.telesphoreo.utils.NLog;
 
 public class Updater
 {

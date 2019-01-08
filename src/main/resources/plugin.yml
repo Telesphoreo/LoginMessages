@@ -7,4 +7,12 @@ api-version: 1.13
 commands:
   loginmessages:
     usage: /<command> [reload]
-    description: Shows information about or reload LoginMessages
+    description: Shows information about or reload LoginMessages.
+  setloginmessage:
+    usage: /<command> <message>
+    description: Set your login message in-game.
+    aliases: [slm, setlogin]
+  deleteloginmessage:
+    usage: /<command>
+    description: Delete your login message.
+    aliases: [dellogin, deletelogin, delloginmessage]

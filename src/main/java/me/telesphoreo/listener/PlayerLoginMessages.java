@@ -2,14 +2,12 @@ package me.telesphoreo.listener;
 
 import java.util.Map;
 import me.telesphoreo.loginmessages.LoginMessages;
+import me.telesphoreo.loginmessages.NLog;
 import org.bukkit.Bukkit;
-import org.bukkit.configuration.MemorySection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
-import me.telesphoreo.utils.NLog;
-import me.telesphoreo.utils.NUtil;
 
 public class PlayerLoginMessages implements Listener
 {
@@ -24,19 +22,20 @@ public class PlayerLoginMessages implements Listener
 
             for (String playerKeys : player_login_messages.keySet())
             {
-                MemorySection login = (MemorySection)player_login_messages.get(playerKeys);
-                String message = (String)login.get("message");
-                if (player_login_messages.keySet().contains(player.getName()))
+                String message = (String)LoginMessages.plugin.getConfig().get("players." + player.getName() + ".message");
+                if (playerKeys.contains(player.getName()))
                 {
                     if (!vanilla_join_msg)
                     {
                         // Set the join message
-                        event.setJoinMessage(NUtil.colorize(message.replace("%player%", player.getName())));
+                        event.setJoinMessage(LoginMessages.colorize(message.replace("%player%", player.getName())));
+                        // Log it
+                        NLog.info(LoginMessages.colorize(message.replace("%player%", player.getName())));
                     }
                     else
                     {
                         // Just broadcast it instead
-                        Bukkit.broadcastMessage(NUtil.colorize(message.replace("%player%", player.getName())));
+                        Bukkit.broadcastMessage(LoginMessages.colorize(message.replace("%player%", player.getName())));
                     }
                     return true;
                 }
