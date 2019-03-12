@@ -1,5 +1,5 @@
 #
-# Login Messages v1.5
+# Login Messages v1.5.1
 #
 # There are two sections: ranks and players
 # The ranks are permission based. Some example ranks are already created, but you can
@@ -34,7 +34,7 @@ ranks:
     permission: loginmessages.owner
     message: "&b%player% is the &4&oOwner"
 players:
-  Model_3:
+  Jewish_Luigi:
     message: "&bThe %player% it's in the?"
   yashi4554:
     message: "&b%player% is an &4&oAdmin&b and the &9The Supreme Builder"

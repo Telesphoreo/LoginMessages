@@ -1,4 +1,4 @@
-package me.telesphoreo.loginmessages;
+package me.telesphoreo.util;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.EnumMap;
 import java.util.Map;
+import me.telesphoreo.LoginMessages;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;

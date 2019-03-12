@@ -1,4 +1,4 @@
-package me.telesphoreo.loginmessages;
+package me.telesphoreo;
 
 import java.io.InputStream;
 import java.util.Properties;
@@ -6,6 +6,9 @@ import me.telesphoreo.commands.CMD_Handler;
 import me.telesphoreo.commands.CMD_Loader;
 import me.telesphoreo.listener.PermissionLoginMessages;
 import me.telesphoreo.listener.PlayerLoginMessages;
+import me.telesphoreo.util.Config;
+import me.telesphoreo.util.NLog;
+import me.telesphoreo.util.Updater;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.ChatColor;
 import org.bukkit.Server;
@@ -20,7 +23,6 @@ public class LoginMessages extends JavaPlugin
     public static LoginMessages plugin;
     public static final BuildProperties build = new BuildProperties();
     public static Server server;
-
     public static String pluginName;
     public static String pluginVersion;
 
@@ -29,7 +31,7 @@ public class LoginMessages extends JavaPlugin
     {
         LoginMessages.plugin = this;
         LoginMessages.server = plugin.getServer();
-        NLog.setServerLogger(server.getLogger());
+        NLog.setPluginLogger(plugin.getLogger());
         NLog.setServerLogger(server.getLogger());
         LoginMessages.pluginName = plugin.getDescription().getName();
         LoginMessages.pluginVersion = plugin.getDescription().getVersion();
@@ -43,16 +45,10 @@ public class LoginMessages extends JavaPlugin
         server.getPluginManager().registerEvents(new PermissionLoginMessages(), LoginMessages.plugin);
         new Metrics(this);
         Config.loadConfigs();
-        // Wait two seconds before checking if it is out of date
-        new BukkitRunnable()
+        if (isConfigOutOfDate())
         {
-            @Override
-            public void run()
-            {
-                isConfigOutOfDate();
-            }
-        }.runTaskLater(plugin, 40L);
-
+            NLog.info("Configuration file has been successfully updated with new entries.");
+        }
         new BukkitRunnable()
         {
             @Override
@@ -67,8 +63,15 @@ public class LoginMessages extends JavaPlugin
     @Override
     public void onDisable()
     {
-        Updater updater = new Updater(plugin);
-        updater.update();
+        try
+        {
+            Updater updater = new Updater(plugin);
+            updater.update();
+        }
+        catch (NoClassDefFoundError ex)
+        {
+            NLog.info("Failed to check for an update.");
+        }
     }
 
     @Override
@@ -77,21 +80,17 @@ public class LoginMessages extends JavaPlugin
         return CMD_Handler.handleCommand(sender, cmd, commandLabel, args);
     }
 
-    public void isConfigOutOfDate()
+    public boolean isConfigOutOfDate()
     {
-        boolean updated = false;
         if (!plugin.getConfig().isSet("show_vanilla_messages"))
         {
             NLog.info("Unable to find valid configuration entry: show_vanilla_messages! Creating new entry with default value");
             plugin.getConfig().set("show_vanilla_messages", false);
             plugin.saveConfig();
             plugin.reloadConfig();
-            updated = true;
+            return true;
         }
-        if (updated)
-        {
-            NLog.info("Configuration file has been successfully updated!");
-        }
+        return false;
     }
 
     public void setLoginMessage(Player player, String message)

@@ -1,8 +1,8 @@
 name: ${project.name}
 version: ${project.version}
 description: A simple, lightweight plugin to easily create login messages
-author: Model_3
-main: me.telesphoreo.loginmessages.LoginMessages
+author: Jewish_Luigi
+main: me.telesphoreo.LoginMessages
 api-version: 1.13
 commands:
   loginmessages:
@@ -15,4 +15,4 @@ commands:
   deleteloginmessage:
     usage: /<command>
     description: Delete your login message.
-    aliases: [dellogin, deletelogin, delloginmessage]
+    aliases: [dlm, dellogin, deletelogin]

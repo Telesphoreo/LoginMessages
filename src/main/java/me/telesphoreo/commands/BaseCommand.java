@@ -1,7 +1,7 @@
 package me.telesphoreo.commands;
 
 import java.util.Collection;
-import me.telesphoreo.loginmessages.LoginMessages;
+import me.telesphoreo.LoginMessages;
 import org.bukkit.Server;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;

@@ -1,4 +1,4 @@
-package me.telesphoreo.loginmessages;
+package me.telesphoreo.util;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;

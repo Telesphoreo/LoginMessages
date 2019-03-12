@@ -1,8 +1,8 @@
 package me.telesphoreo.listener;
 
 import java.util.Map;
-import me.telesphoreo.loginmessages.LoginMessages;
-import me.telesphoreo.loginmessages.NLog;
+import me.telesphoreo.LoginMessages;
+import me.telesphoreo.util.NLog;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

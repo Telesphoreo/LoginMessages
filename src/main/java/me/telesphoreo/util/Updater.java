@@ -1,4 +1,4 @@
-package me.telesphoreo.loginmessages;
+package me.telesphoreo.util;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -9,6 +9,7 @@ import java.io.InputStreamReader;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLConnection;
+import me.telesphoreo.LoginMessages;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -33,6 +34,7 @@ public class Updater
             URLConnection con = url.openConnection();
             InputStreamReader isr = new InputStreamReader(con.getInputStream());
             BufferedReader reader = new BufferedReader(isr);
+
             if (!reader.ready())
             {
                 return;
@@ -43,7 +45,13 @@ public class Updater
 
             if (oldHead.equals("${git.commit.id.abbrev}") || oldHead.equals("unknown"))
             {
-                NLog.info("[LoginMessages] No Git head detected, not updating LoginMessages");
+                NLog.info("No Git head detected, not updating LoginMessages.");
+                return;
+            }
+
+            if (newHead.equals(oldHead))
+            {
+                NLog.info("There are no updates available.");
                 return;
             }
 
@@ -63,12 +71,12 @@ public class Updater
 
                 out.close();
                 in.close();
-                NLog.info("[LoginMessages] Update successfully applied.");
+                NLog.info("Update successfully applied.");
             }
         }
         catch (IOException ex)
         {
-            NLog.info("[LoginMessages] There was an issue fetching the server for an update.");
+            NLog.info("There was an issue fetching the server for an update.");
         }
     }
 

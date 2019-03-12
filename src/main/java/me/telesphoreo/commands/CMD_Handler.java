@@ -1,7 +1,7 @@
 package me.telesphoreo.commands;
 
-import me.telesphoreo.loginmessages.LoginMessages;
-import me.telesphoreo.loginmessages.NLog;
+import me.telesphoreo.LoginMessages;
+import me.telesphoreo.util.NLog;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
