@@ -55,24 +55,21 @@ public class Updater
                 return;
             }
 
-            if (!newHead.equals(oldHead))
+            String dlLink = "https://telesphoreo.me/loginmessages/LoginMessages.jar";
+            url = new URL(dlLink);
+            con = url.openConnection();
+            InputStream in = con.getInputStream();
+            FileOutputStream out = new FileOutputStream(path);
+            byte[] buffer = new byte[1024];
+            int size = 0;
+            while ((size = in.read(buffer)) != -1)
             {
-                String dlLink = "https://telesphoreo.me/loginmessages/LoginMessages.jar";
-                url = new URL(dlLink);
-                con = url.openConnection();
-                InputStream in = con.getInputStream();
-                FileOutputStream out = new FileOutputStream(path);
-                byte[] buffer = new byte[1024];
-                int size = 0;
-                while ((size = in.read(buffer)) != -1)
-                {
-                    out.write(buffer, 0, size);
-                }
-
-                out.close();
-                in.close();
-                NLog.info("Update successfully applied.");
+                out.write(buffer, 0, size);
             }
+
+            out.close();
+            in.close();
+            NLog.info("An update was successfully applied.");
         }
         catch (IOException ex)
         {

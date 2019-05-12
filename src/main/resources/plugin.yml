@@ -1,7 +1,7 @@
 name: ${project.name}
 version: ${project.version}
 description: A simple, lightweight plugin to easily create login messages
-author: Jewish_Luigi
+author: Telesphoreo
 main: me.telesphoreo.LoginMessages
 api-version: 1.13
 commands:

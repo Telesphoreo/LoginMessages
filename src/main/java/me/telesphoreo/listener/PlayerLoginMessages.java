@@ -11,18 +11,25 @@ import org.bukkit.event.player.PlayerJoinEvent;
 
 public class PlayerLoginMessages implements Listener
 {
+    private LoginMessages plugin = LoginMessages.plugin;
+
     @EventHandler
     public boolean onPlayerJoin(PlayerJoinEvent event)
     {
         Player player = event.getPlayer();
         try
         {
-            Map<String, Object> player_login_messages = LoginMessages.plugin.getConfig().getConfigurationSection("players").getValues(false);
-            boolean vanilla_join_msg = LoginMessages.plugin.getConfig().getBoolean("show_vanilla_messages");
+            Map<String, Object> player_login_messages = plugin.getConfig().getConfigurationSection("players").getValues(false);
+            boolean vanilla_join_msg = plugin.getConfig().getBoolean("show_vanilla_messages");
 
             for (String playerKeys : player_login_messages.keySet())
             {
-                String message = (String)LoginMessages.plugin.getConfig().get("players." + player.getName() + ".message");
+                String message = (String)plugin.getConfig().get("players." + player.getName() + ".message");
+                if (message == null)
+                {
+                    NLog.severe("There is no message set!");
+                    break;
+                }
                 if (playerKeys.contains(player.getName()))
                 {
                     if (!vanilla_join_msg)

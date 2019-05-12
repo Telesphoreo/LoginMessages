@@ -1,17 +1,23 @@
 package me.telesphoreo.commands;
 
+import me.telesphoreo.LoginMessages;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-@CommandPermissions(source = SourceType.BOTH)
-@CommandParameters(description = "Set your login message in-game.", usage = "/<command> <message>", aliases = "slm,setlogin")
-public class Command_setloginmessage extends BaseCommand
+public class SetLoginMessage implements CommandExecutor
 {
     @Override
-    public boolean run(final CommandSender sender, final Player playerSender, final Command cmd, final String commandLabel, final String[] args, final boolean senderIsConsole)
+    public boolean onCommand(CommandSender sender, Command cmd, String str, String[] args)
     {
+        if (!(sender instanceof Player))
+        {
+            sender.sendMessage(Messages.PLAYER_ONLY);
+            return true;
+        }
+
         if (!sender.hasPermission("loginmessages.setloginmessage"))
         {
             sender.sendMessage(Messages.MSG_NO_PERMS);
@@ -24,7 +30,7 @@ public class Command_setloginmessage extends BaseCommand
         }
 
         String loginMsg = StringUtils.join(args, " ", 0, args.length);
-        plugin.setLoginMessage(playerSender, loginMsg.replace(sender.getName(), "%player%"));
+        LoginMessages.plugin.setLoginMessage((Player)sender, loginMsg.replace(sender.getName(), "%player%"));
         return true;
     }
 }

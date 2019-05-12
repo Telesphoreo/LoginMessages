@@ -2,8 +2,9 @@ package me.telesphoreo;
 
 import java.io.InputStream;
 import java.util.Properties;
-import me.telesphoreo.commands.CMD_Handler;
-import me.telesphoreo.commands.CMD_Loader;
+import me.telesphoreo.commands.DeleteLoginMessage;
+import me.telesphoreo.commands.LoginMessagesCommand;
+import me.telesphoreo.commands.SetLoginMessage;
 import me.telesphoreo.listener.PermissionLoginMessages;
 import me.telesphoreo.listener.PlayerLoginMessages;
 import me.telesphoreo.util.Config;
@@ -12,11 +13,8 @@ import me.telesphoreo.util.Updater;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.ChatColor;
 import org.bukkit.Server;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scheduler.BukkitRunnable;
 
 public class LoginMessages extends JavaPlugin
 {
@@ -40,24 +38,16 @@ public class LoginMessages extends JavaPlugin
     @Override
     public void onEnable()
     {
-        build.load(plugin);
-        server.getPluginManager().registerEvents(new PlayerLoginMessages(), LoginMessages.plugin);
-        server.getPluginManager().registerEvents(new PermissionLoginMessages(), LoginMessages.plugin);
+        build.load(this);
+        server.getPluginManager().registerEvents(new PlayerLoginMessages(), this);
+        server.getPluginManager().registerEvents(new PermissionLoginMessages(), this);
         new Metrics(this);
         Config.loadConfigs();
         if (isConfigOutOfDate())
         {
             NLog.info("Configuration file has been successfully updated with new entries.");
         }
-        new BukkitRunnable()
-        {
-            @Override
-            public void run()
-            {
-                CMD_Loader.getCommandMap();
-                CMD_Loader.scan();
-            }
-        };
+        registerCommands();
     }
 
     @Override
@@ -65,7 +55,7 @@ public class LoginMessages extends JavaPlugin
     {
         try
         {
-            Updater updater = new Updater(plugin);
+            Updater updater = new Updater(this);
             updater.update();
         }
         catch (NoClassDefFoundError ex)
@@ -74,20 +64,22 @@ public class LoginMessages extends JavaPlugin
         }
     }
 
-    @Override
-    public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args)
+    public void registerCommands()
     {
-        return CMD_Handler.handleCommand(sender, cmd, commandLabel, args);
+        getCommand("deleteloginmessage").setExecutor(new DeleteLoginMessage());
+        getCommand("loginmessages").setExecutor(new LoginMessagesCommand());
+        getCommand("loginmessages").setTabCompleter(new LoginMessagesCommand());
+        getCommand("setloginmessage").setExecutor(new SetLoginMessage());
     }
 
     public boolean isConfigOutOfDate()
     {
-        if (!plugin.getConfig().isSet("show_vanilla_messages"))
+        if (!getConfig().isSet("show_vanilla_messages"))
         {
             NLog.info("Unable to find valid configuration entry: show_vanilla_messages! Creating new entry with default value");
-            plugin.getConfig().set("show_vanilla_messages", false);
-            plugin.saveConfig();
-            plugin.reloadConfig();
+            getConfig().set("show_vanilla_messages", false);
+            saveConfig();
+            reloadConfig();
             return true;
         }
         return false;
@@ -95,28 +87,28 @@ public class LoginMessages extends JavaPlugin
 
     public void setLoginMessage(Player player, String message)
     {
-        if (plugin.getConfig().get("players." + player.getName()) == null)
+        if (getConfig().get("players." + player.getName()) == null)
         {
-            plugin.getConfig().createSection("players." + player.getName());
+            getConfig().createSection("players." + player.getName());
         }
         player.sendMessage(ChatColor.GRAY + "Your login message is now:");
         player.sendMessage(ChatColor.GRAY + "> " + ChatColor.RESET + colorize(message.replace("%player%", player.getName())));
-        plugin.getConfig().set("players." + player.getName() + ".message", message);
-        plugin.saveConfig();
-        plugin.reloadConfig();
+        getConfig().set("players." + player.getName() + ".message", message);
+        saveConfig();
+        reloadConfig();
     }
 
     public void deleteLoginMessage(Player player)
     {
-        if (plugin.getConfig().get("players." + player.getName()) == null)
+        if (getConfig().get("players." + player.getName()) == null)
         {
             player.sendMessage(ChatColor.RED + "You do not have a login message set.");
             return;
         }
         player.sendMessage(ChatColor.GRAY + "Your login message has been removed.");
-        plugin.getConfig().set("players." + player.getName(), null);
-        plugin.saveConfig();
-        plugin.reloadConfig();
+        getConfig().set("players." + player.getName(), null);
+        saveConfig();
+        reloadConfig();
     }
 
     public static String colorize(String string)

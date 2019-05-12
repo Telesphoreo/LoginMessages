@@ -1,18 +1,19 @@
 package me.telesphoreo.commands;
 
+import java.util.Collections;
+import java.util.List;
 import me.telesphoreo.LoginMessages;
 import me.telesphoreo.util.NLog;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
+import org.bukkit.command.TabCompleter;
 
-@CommandPermissions(source = SourceType.BOTH)
-@CommandParameters(description = "Shows information about, reload, or update LoginMessages", usage = "/<command> [reload]")
-public class Command_loginmessages extends BaseCommand
+public class LoginMessagesCommand implements CommandExecutor, TabCompleter
 {
     @Override
-    public boolean run(final CommandSender sender, final Player sender_p, final Command cmd, final String commandLabel, final String[] args, final boolean senderIsConsole)
+    public boolean onCommand(CommandSender sender, Command cmd, String str, String[] args)
     {
         if (args.length == 0)
         {
@@ -33,31 +34,39 @@ public class Command_loginmessages extends BaseCommand
             sender.sendMessage(ChatColor.GOLD + "Visit " + ChatColor.BLUE + "https://github.com/Telesphoreo/LoginMessages" + ChatColor.GOLD + " for more information");
             return true;
         }
-        switch (args[0].toLowerCase())
+        if (args[0].toLowerCase().equals("reload"))
         {
-            case "reload":
+            if (!sender.hasPermission("loginmessages.reload"))
             {
-                if (!sender.hasPermission("loginmessages.reload"))
-                {
-                    sender.sendMessage(Messages.MSG_NO_PERMS);
-                    return true;
-                }
-                try
-                {
-                    plugin.isConfigOutOfDate();
-                    LoginMessages.plugin.reloadConfig();
-                    sender.sendMessage(Messages.RELOADED);
-                    return true;
-                }
-                catch (Exception ex)
-                {
-                    NLog.severe(ex);
-                    sender.sendMessage(Messages.FAILED);
-                }
+                sender.sendMessage(Messages.MSG_NO_PERMS);
                 return true;
             }
-            default:
-                return false;
+            try
+            {
+                LoginMessages.plugin.isConfigOutOfDate();
+                LoginMessages.plugin.reloadConfig();
+                sender.sendMessage(Messages.RELOADED);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                NLog.severe(ex);
+                sender.sendMessage(Messages.FAILED);
+            }
+            return true;
+        }
+        return false;
+    }
+
+    public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args)
+    {
+        if (sender.hasPermission("loginmessages.reload"))
+        {
+            return Collections.singletonList("reload");
+        }
+        else
+        {
+            return null;
         }
     }
 }

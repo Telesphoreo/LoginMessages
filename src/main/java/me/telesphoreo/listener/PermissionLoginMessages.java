@@ -11,9 +11,12 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;
+import org.bukkit.plugin.Plugin;
 
 public class PermissionLoginMessages implements Listener
 {
+    private LoginMessages plugin = LoginMessages.plugin;
+
     private boolean hasPermission(Player player, String permission)
     {
         Permission p = new Permission(permission, PermissionDefault.FALSE);
@@ -26,14 +29,19 @@ public class PermissionLoginMessages implements Listener
         Player player = event.getPlayer();
         try
         {
-            Map<String, Object> login_messages = LoginMessages.plugin.getConfig().getConfigurationSection("ranks").getValues(false);
-            Map<String, Object> player_login_messages = LoginMessages.plugin.getConfig().getConfigurationSection("players").getValues(false);
-            boolean vanilla_join_msg = LoginMessages.plugin.getConfig().getBoolean("show_vanilla_messages");
+            Map<String, Object> login_messages = plugin.getConfig().getConfigurationSection("ranks").getValues(false);
+            Map<String, Object> player_login_messages = plugin.getConfig().getConfigurationSection("players").getValues(false);
+            boolean vanilla_join_msg = plugin.getConfig().getBoolean("show_vanilla_messages");
             for (String key : login_messages.keySet())
             {
                 MemorySection login = (MemorySection)login_messages.get(key);
                 String permission = (String)login.get("permission");
                 String message = (String)login.get("message");
+                if (message == null)
+                {
+                    NLog.severe("There is no message set!");
+                    break;
+                }
                 if (hasPermission(player, permission) && !player_login_messages.keySet().contains(player.getName()))
                 {
                     if (!vanilla_join_msg)
