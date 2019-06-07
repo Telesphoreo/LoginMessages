@@ -20,9 +20,7 @@ public class LoginMessagesCommand implements CommandExecutor, TabCompleter
             LoginMessages.BuildProperties build = LoginMessages.build;
             sender.sendMessage(ChatColor.GOLD + "LoginMessages is a lightweight plugin that allows players to have a custom join message.");
             sender.sendMessage(ChatColor.GOLD + String.format("Version "
-                            + ChatColor.BLUE + "%s - %s Build %s " + ChatColor.GOLD + "("
-                            + ChatColor.BLUE + "%s" + ChatColor.GOLD + ")",
-                    build.codename,
+                            + ChatColor.BLUE + "%s.%s.%s",
                     build.version,
                     build.number,
                     build.head));
@@ -31,7 +29,7 @@ public class LoginMessagesCommand implements CommandExecutor, TabCompleter
                             + ChatColor.BLUE + "%s",
                     build.date,
                     build.author));
-            sender.sendMessage(ChatColor.GOLD + "Visit " + ChatColor.BLUE + "https://github.com/Telesphoreo/LoginMessages" + ChatColor.GOLD + " for more information");
+            sender.sendMessage(ChatColor.GREEN + "Visit " + ChatColor.AQUA + "https://github.com/Telesphoreo/LoginMessages" + ChatColor.GREEN + " for more information");
             return true;
         }
         if (args[0].toLowerCase().equals("reload"))

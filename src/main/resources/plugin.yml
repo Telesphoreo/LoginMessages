@@ -9,10 +9,10 @@ commands:
     usage: /<command> [reload]
     description: Shows information about or reload LoginMessages.
   setloginmessage:
-    usage: /<command> <message>
-    description: Set your login message in-game.
+    usage: /<command> [-o player] <message>
+    description: Set your or another player's login message in-game.
     aliases: [slm, setlogin]
   deleteloginmessage:
-    usage: /<command>
-    description: Delete your login message.
+    usage: /<command> [-o player]
+    description: Delete your or another player's login message.
     aliases: [dlm, dellogin, deletelogin]

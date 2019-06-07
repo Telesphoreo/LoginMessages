@@ -13,6 +13,7 @@ import me.telesphoreo.util.Updater;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.ChatColor;
 import org.bukkit.Server;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -98,6 +99,19 @@ public class LoginMessages extends JavaPlugin
         reloadConfig();
     }
 
+    public void setLoginMessage(CommandSender sender, Player player, String message)
+    {
+        if (getConfig().get("players." + player.getName()) == null)
+        {
+            getConfig().createSection("players." + player.getName());
+        }
+        sender.sendMessage(ChatColor.GRAY + player.getName() + "'s login message is now:");
+        sender.sendMessage(ChatColor.GRAY + "> " + ChatColor.RESET + colorize(message.replace("%player%", player.getName())));
+        getConfig().set("players." + player.getName() + ".message", message);
+        saveConfig();
+        reloadConfig();
+    }
+
     public void deleteLoginMessage(Player player)
     {
         if (getConfig().get("players." + player.getName()) == null)
@@ -106,6 +120,19 @@ public class LoginMessages extends JavaPlugin
             return;
         }
         player.sendMessage(ChatColor.GRAY + "Your login message has been removed.");
+        getConfig().set("players." + player.getName(), null);
+        saveConfig();
+        reloadConfig();
+    }
+
+    public void deleteLoginMessage(CommandSender sender, Player player)
+    {
+        if (getConfig().get("players." + player.getName()) == null)
+        {
+            sender.sendMessage(ChatColor.RED + player.getName() + " does not have a login message set.");
+            return;
+        }
+        sender.sendMessage(ChatColor.GRAY + player.getName() + "'s login message has been removed.");
         getConfig().set("players." + player.getName(), null);
         saveConfig();
         reloadConfig();

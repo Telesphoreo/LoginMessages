@@ -5,11 +5,10 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>me.telesphoreo</groupId>
     <artifactId>LoginMessages</artifactId>
-    <version>2.0</version>
+    <version>2.1</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <build.codename>Asteroid</build.codename>
         <jar.finalName>${project.name}</jar.finalName>
         <timestamp>${maven.build.timestamp}</timestamp>
         <maven.build.timestamp.format>MM/dd/yyyy HH:mm</maven.build.timestamp.format>
@@ -37,13 +36,13 @@
         <dependency>
             <groupId>org.bukkit</groupId>
             <artifactId>bukkit</artifactId>
-            <version>1.14-R0.1-SNAPSHOT</version>
+            <version>1.14.2-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.bstats</groupId>
             <artifactId>bstats-bukkit</artifactId>
-            <version>1.4</version>
+            <version>1.5</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>
@@ -146,7 +145,6 @@
                                               comment="Build information. Edit this to your liking.">
                                     <entry key="buildAuthor" default="unknown"/>
                                     <entry key="buildNumber" default="0"/>
-                                    <entry key="buildCodename" value="${build.codename}"/>
                                     <entry key="buildVersion" value="${project.version}"/>
                                     <entry key="buildDate" value="${timestamp}"/>
                                     <!--suppress UnresolvedMavenProperty -->

@@ -25,13 +25,13 @@ public class PlayerLoginMessages implements Listener
             for (String playerKeys : player_login_messages.keySet())
             {
                 String message = (String)plugin.getConfig().get("players." + player.getName() + ".message");
-                if (message == null)
-                {
-                    NLog.severe("There is no message set!");
-                    break;
-                }
                 if (playerKeys.contains(player.getName()))
                 {
+                    if (message == null)
+                    {
+                        NLog.severe("There is no message set!");
+                        break;
+                    }
                     if (!vanilla_join_msg)
                     {
                         // Set the join message

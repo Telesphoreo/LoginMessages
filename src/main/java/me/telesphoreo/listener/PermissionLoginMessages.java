@@ -11,7 +11,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;
-import org.bukkit.plugin.Plugin;
 
 public class PermissionLoginMessages implements Listener
 {
@@ -37,13 +36,13 @@ public class PermissionLoginMessages implements Listener
                 MemorySection login = (MemorySection)login_messages.get(key);
                 String permission = (String)login.get("permission");
                 String message = (String)login.get("message");
-                if (message == null)
-                {
-                    NLog.severe("There is no message set!");
-                    break;
-                }
                 if (hasPermission(player, permission) && !player_login_messages.keySet().contains(player.getName()))
                 {
+                    if (message == null)
+                    {
+                        NLog.severe("There is no message set!");
+                        break;
+                    }
                     if (!vanilla_join_msg)
                     {
                         // Set the join message
