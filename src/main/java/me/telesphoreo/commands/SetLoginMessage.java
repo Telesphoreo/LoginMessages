@@ -38,7 +38,7 @@ public class SetLoginMessage implements CommandExecutor
 
                 if (args.length < 3)
                 {
-                    sender.sendMessage(ChatColor.RED + "You must provide a message.");
+                    sender.sendMessage(ChatColor.RED + "Please provide a message.");
                     return true;
                 }
 

@@ -3,6 +3,7 @@ package me.telesphoreo.commands;
 import java.util.Collections;
 import java.util.List;
 import me.telesphoreo.LoginMessages;
+import me.telesphoreo.util.LoginMessagesBase;
 import me.telesphoreo.util.NLog;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -10,7 +11,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 
-public class LoginMessagesCommand implements CommandExecutor, TabCompleter
+public class LoginMessagesCommand extends LoginMessagesBase implements CommandExecutor, TabCompleter
 {
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String str, String[] args)
@@ -41,8 +42,7 @@ public class LoginMessagesCommand implements CommandExecutor, TabCompleter
             }
             try
             {
-                LoginMessages.plugin.isConfigOutOfDate();
-                LoginMessages.plugin.reloadConfig();
+                plugin.reloadConfig();
                 sender.sendMessage(Messages.RELOADED);
                 return true;
             }

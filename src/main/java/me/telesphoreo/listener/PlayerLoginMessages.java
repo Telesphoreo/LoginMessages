@@ -2,6 +2,7 @@ package me.telesphoreo.listener;
 
 import java.util.Map;
 import me.telesphoreo.LoginMessages;
+import me.telesphoreo.util.LoginMessagesBase;
 import me.telesphoreo.util.NLog;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -9,10 +10,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
-public class PlayerLoginMessages implements Listener
+public class PlayerLoginMessages extends LoginMessagesBase implements Listener
 {
-    private LoginMessages plugin = LoginMessages.plugin;
-
     @EventHandler
     public boolean onPlayerJoin(PlayerJoinEvent event)
     {
@@ -35,16 +34,17 @@ public class PlayerLoginMessages implements Listener
                     if (!vanilla_join_msg)
                     {
                         // Set the join message
-                        event.setJoinMessage(LoginMessages.colorize(message.replace("%player%", player.getName())));
+                        event.setJoinMessage(plugin.colorize(message.replace("%player%", player.getName())));
                         // Log it
-                        NLog.info(LoginMessages.colorize(message.replace("%player%", player.getName())));
+                        NLog.info(plugin.colorize(message.replace("%player%", player.getName())));
+                        break;
                     }
                     else
                     {
                         // Just broadcast it instead
-                        Bukkit.broadcastMessage(LoginMessages.colorize(message.replace("%player%", player.getName())));
+                        Bukkit.broadcastMessage(plugin.colorize(message.replace("%player%", player.getName())));
+                        break;
                     }
-                    return true;
                 }
             }
         }

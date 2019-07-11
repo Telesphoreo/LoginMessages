@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>me.telesphoreo</groupId>
     <artifactId>LoginMessages</artifactId>
-    <version>2.1</version>
+    <version>2.1.1</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -36,7 +36,7 @@
         <dependency>
             <groupId>org.bukkit</groupId>
             <artifactId>bukkit</artifactId>
-            <version>1.14.2-R0.1-SNAPSHOT</version>
+            <version>1.14.3-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -60,7 +60,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.0</version>
+                <version>3.8.1</version>
                 <configuration>
                     <outputFileName>LoginMessages.jar</outputFileName>
                     <source>1.8</source>
@@ -95,7 +95,7 @@
             <plugin>
                 <groupId>pl.project13.maven</groupId>
                 <artifactId>git-commit-id-plugin</artifactId>
-                <version>2.2.6</version>
+                <version>3.0.0</version>
                 <executions>
                     <execution>
                         <id>get-the-git-infos</id>

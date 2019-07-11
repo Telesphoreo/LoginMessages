@@ -7,7 +7,6 @@ import me.telesphoreo.commands.LoginMessagesCommand;
 import me.telesphoreo.commands.SetLoginMessage;
 import me.telesphoreo.listener.PermissionLoginMessages;
 import me.telesphoreo.listener.PlayerLoginMessages;
-import me.telesphoreo.util.Config;
 import me.telesphoreo.util.NLog;
 import me.telesphoreo.util.Updater;
 import org.bstats.bukkit.Metrics;
@@ -28,12 +27,13 @@ public class LoginMessages extends JavaPlugin
     @Override
     public void onLoad()
     {
-        LoginMessages.plugin = this;
-        LoginMessages.server = plugin.getServer();
+        plugin = this;
+        server = plugin.getServer();
         NLog.setPluginLogger(plugin.getLogger());
         NLog.setServerLogger(server.getLogger());
-        LoginMessages.pluginName = plugin.getDescription().getName();
-        LoginMessages.pluginVersion = plugin.getDescription().getVersion();
+        pluginName = plugin.getDescription().getName();
+        pluginVersion = plugin.getDescription().getVersion();
+        this.saveDefaultConfig();
     }
 
     @Override
@@ -43,11 +43,6 @@ public class LoginMessages extends JavaPlugin
         server.getPluginManager().registerEvents(new PlayerLoginMessages(), this);
         server.getPluginManager().registerEvents(new PermissionLoginMessages(), this);
         new Metrics(this);
-        Config.loadConfigs();
-        if (isConfigOutOfDate())
-        {
-            NLog.info("Configuration file has been successfully updated with new entries.");
-        }
         registerCommands();
     }
 
@@ -71,19 +66,6 @@ public class LoginMessages extends JavaPlugin
         getCommand("loginmessages").setExecutor(new LoginMessagesCommand());
         getCommand("loginmessages").setTabCompleter(new LoginMessagesCommand());
         getCommand("setloginmessage").setExecutor(new SetLoginMessage());
-    }
-
-    public boolean isConfigOutOfDate()
-    {
-        if (!getConfig().isSet("show_vanilla_messages"))
-        {
-            NLog.info("Unable to find valid configuration entry: show_vanilla_messages! Creating new entry with default value");
-            getConfig().set("show_vanilla_messages", false);
-            saveConfig();
-            reloadConfig();
-            return true;
-        }
-        return false;
     }
 
     public void setLoginMessage(Player player, String message)
@@ -138,7 +120,7 @@ public class LoginMessages extends JavaPlugin
         reloadConfig();
     }
 
-    public static String colorize(String string)
+    public String colorize(String string)
     {
         return ChatColor.translateAlternateColorCodes('&', string);
     }
@@ -146,7 +128,6 @@ public class LoginMessages extends JavaPlugin
     public static class BuildProperties
     {
         public String author;
-        public String codename;
         public String version;
         public String number;
         public String date;
@@ -165,7 +146,6 @@ public class LoginMessages extends JavaPlugin
                 }
 
                 author = props.getProperty("buildAuthor", "unknown");
-                codename = props.getProperty("buildCodename", "unknown");
                 version = props.getProperty("buildVersion", pluginVersion);
                 number = props.getProperty("buildNumber", "1");
                 date = props.getProperty("buildDate", "unknown");

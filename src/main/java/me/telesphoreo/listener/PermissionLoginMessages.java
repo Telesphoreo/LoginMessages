@@ -2,6 +2,7 @@ package me.telesphoreo.listener;
 
 import java.util.Map;
 import me.telesphoreo.LoginMessages;
+import me.telesphoreo.util.LoginMessagesBase;
 import me.telesphoreo.util.NLog;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.MemorySection;
@@ -12,10 +13,8 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;
 
-public class PermissionLoginMessages implements Listener
+public class PermissionLoginMessages extends LoginMessagesBase implements Listener
 {
-    private LoginMessages plugin = LoginMessages.plugin;
-
     private boolean hasPermission(Player player, String permission)
     {
         Permission p = new Permission(permission, PermissionDefault.FALSE);
@@ -46,12 +45,15 @@ public class PermissionLoginMessages implements Listener
                     if (!vanilla_join_msg)
                     {
                         // Set the join message
-                        event.setJoinMessage(LoginMessages.colorize(message.replace("%player%", player.getName())));
+                        event.setJoinMessage(plugin.colorize(message.replace("%player%", player.getName())));
+                        NLog.info(plugin.colorize(message.replace("%player%", player.getName())));
+                        break;
                     }
                     else
                     {
                         // Just broadcast it instead
-                        Bukkit.broadcastMessage(LoginMessages.colorize(message.replace("%player%", player.getName())));
+                        Bukkit.broadcastMessage(plugin.colorize(message.replace("%player%", player.getName())));
+                        break;
                     }
                 }
             }

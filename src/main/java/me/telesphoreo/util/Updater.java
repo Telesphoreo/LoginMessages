@@ -10,17 +10,16 @@ import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLConnection;
 import me.telesphoreo.LoginMessages;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class Updater
 {
-    private Plugin plugin;
+    private LoginMessages plugin;
     private LoginMessages.BuildProperties build = LoginMessages.build;
     private String oldHead = build.head;
     private String path = this.getFilePath();
 
-    public Updater(Plugin plugin)
+    public Updater(LoginMessages plugin)
     {
         this.plugin = plugin;
     }
@@ -69,7 +68,7 @@ public class Updater
 
             out.close();
             in.close();
-            NLog.info("An update was successfully applied.");
+            NLog.info("An update to LoginMessages has been applied. (" + oldHead + ") -> " + "(" + newHead + ")");
         }
         catch (IOException ex)
         {
