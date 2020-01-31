@@ -32,20 +32,20 @@ public class SetLoginMessage implements CommandExecutor
 
                 if (args.length < 2)
                 {
-                    sender.sendMessage(ChatColor.RED + "Please specify a player.");
+                    sender.sendMessage(Messages.SPECIFY_PLAYER);
                     return true;
                 }
 
                 if (args.length < 3)
                 {
-                    sender.sendMessage(ChatColor.RED + "Please provide a message.");
+                    sender.sendMessage(Messages.PROVIDE_A_MESSAGE);
                     return true;
                 }
 
                 Player player = Bukkit.getPlayer(args[1]);
                 if (player == null)
                 {
-                    sender.sendMessage(ChatColor.RED + "Player not found.");
+                    sender.sendMessage(Messages.PLAYER_NOT_FOUND);
                     return true;
                 }
                 String loginMsg = StringUtils.join(args, " ", 2, args.length);

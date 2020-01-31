@@ -42,7 +42,8 @@ public class LoginMessages extends JavaPlugin
         build.load(this);
         server.getPluginManager().registerEvents(new PlayerLoginMessages(), this);
         server.getPluginManager().registerEvents(new PermissionLoginMessages(), this);
-        new Metrics(this);
+        int pluginId = 2975;
+        new Metrics(this, pluginId);
         registerCommands();
     }
 

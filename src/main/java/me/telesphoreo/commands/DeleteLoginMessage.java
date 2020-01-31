@@ -36,14 +36,14 @@ public class DeleteLoginMessage extends LoginMessagesBase implements CommandExec
 
                 if (args.length < 2)
                 {
-                    sender.sendMessage(ChatColor.RED + "Please specify a player.");
+                    sender.sendMessage(Messages.SPECIFY_PLAYER);
                     return true;
                 }
 
                 Player player = Bukkit.getPlayer(args[1]);
                 if (player == null)
                 {
-                    sender.sendMessage(ChatColor.RED + "Player not found.");
+                    sender.sendMessage(Messages.PLAYER_NOT_FOUND);
                     return true;
                 }
                 plugin.deleteLoginMessage(sender, player);
