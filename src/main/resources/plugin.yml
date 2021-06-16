@@ -11,8 +11,8 @@ commands:
   setloginmessage:
     usage: /<command> [-o player] <message>
     description: Set your or another player's login message in-game.
-    aliases: [slm, setlogin]
+    aliases: [ slm, setlogin ]
   deleteloginmessage:
     usage: /<command> [-o player]
     description: Delete your or another player's login message.
-    aliases: [dlm, dellogin, deletelogin]
+    aliases: [ dlm, dellogin, deletelogin ]

@@ -1,9 +1,7 @@
 package me.telesphoreo.listener;
 
 import java.util.Map;
-import me.telesphoreo.LoginMessages;
 import me.telesphoreo.util.LoginMessagesBase;
-import me.telesphoreo.util.NLog;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -28,7 +26,7 @@ public class PlayerLoginMessages extends LoginMessagesBase implements Listener
                 {
                     if (message == null)
                     {
-                        NLog.severe("There is no message set!");
+                        logger.severe("There is no message set!");
                         break;
                     }
                     if (!vanilla_join_msg)
@@ -36,7 +34,7 @@ public class PlayerLoginMessages extends LoginMessagesBase implements Listener
                         // Set the join message
                         event.setJoinMessage(plugin.colorize(message.replace("%player%", player.getName())));
                         // Log it
-                        NLog.info(plugin.colorize(message.replace("%player%", player.getName())));
+                        logger.info(plugin.colorize(message.replace("%player%", player.getName())));
                         break;
                     }
                     else
@@ -50,8 +48,8 @@ public class PlayerLoginMessages extends LoginMessagesBase implements Listener
         }
         catch (ClassCastException ex)
         {
-            NLog.severe("Failed to load login messages.");
-            NLog.severe(ex);
+            logger.severe("Failed to load login messages.");
+            logger.severe(ex.toString());
         }
         return true;
     }

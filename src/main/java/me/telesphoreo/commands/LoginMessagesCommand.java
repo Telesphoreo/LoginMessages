@@ -4,7 +4,6 @@ import java.util.Collections;
 import java.util.List;
 import me.telesphoreo.LoginMessages;
 import me.telesphoreo.util.LoginMessagesBase;
-import me.telesphoreo.util.NLog;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -33,7 +32,7 @@ public class LoginMessagesCommand extends LoginMessagesBase implements CommandEx
             sender.sendMessage(ChatColor.GREEN + "Visit " + ChatColor.AQUA + "https://github.com/Telesphoreo/LoginMessages" + ChatColor.GREEN + " for more information");
             return true;
         }
-        if (args[0].toLowerCase().equals("reload"))
+        if (args[0].equalsIgnoreCase("reload"))
         {
             if (!sender.hasPermission("loginmessages.reload"))
             {
@@ -48,7 +47,7 @@ public class LoginMessagesCommand extends LoginMessagesBase implements CommandEx
             }
             catch (Exception ex)
             {
-                NLog.severe(ex);
+                logger.severe(ex.toString());
                 sender.sendMessage(Messages.FAILED);
             }
             return true;

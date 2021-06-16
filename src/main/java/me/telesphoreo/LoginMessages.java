@@ -2,15 +2,17 @@ package me.telesphoreo;
 
 import java.io.InputStream;
 import java.util.Properties;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import me.telesphoreo.commands.DeleteLoginMessage;
 import me.telesphoreo.commands.LoginMessagesCommand;
 import me.telesphoreo.commands.SetLoginMessage;
 import me.telesphoreo.listener.PermissionLoginMessages;
 import me.telesphoreo.listener.PlayerLoginMessages;
-import me.telesphoreo.util.NLog;
 import me.telesphoreo.util.Updater;
+import net.md_5.bungee.api.ChatColor;
 import org.bstats.bukkit.Metrics;
-import org.bukkit.ChatColor;
+import org.bukkit.Bukkit;
 import org.bukkit.Server;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -18,19 +20,33 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class LoginMessages extends JavaPlugin
 {
-    public static LoginMessages plugin;
     public static final BuildProperties build = new BuildProperties();
+    private static final Pattern pattern = Pattern.compile("(?<!\\\\)(#[a-fA-F0-9]{6})");
+    public static LoginMessages plugin;
     public static Server server;
     public static String pluginName;
     public static String pluginVersion;
+
+    public String colorize(String message)
+    {
+        if (Bukkit.getBukkitVersion().contains("1.16") || Bukkit.getBukkitVersion().contains("1.17"))
+        {
+            Matcher matcher = pattern.matcher(message);
+            while (matcher.find())
+            {
+                String color = message.substring(matcher.start(), matcher.end());
+                message = message.replace(color, "" + ChatColor.of(color));
+            }
+        }
+        message = ChatColor.translateAlternateColorCodes('&', message);
+        return message;
+    }
 
     @Override
     public void onLoad()
     {
         plugin = this;
         server = plugin.getServer();
-        NLog.setPluginLogger(plugin.getLogger());
-        NLog.setServerLogger(server.getLogger());
         pluginName = plugin.getDescription().getName();
         pluginVersion = plugin.getDescription().getVersion();
         this.saveDefaultConfig();
@@ -45,11 +61,6 @@ public class LoginMessages extends JavaPlugin
         int pluginId = 2975;
         new Metrics(this, pluginId);
         registerCommands();
-    }
-
-    @Override
-    public void onDisable()
-    {
         try
         {
             Updater updater = new Updater(this);
@@ -57,8 +68,13 @@ public class LoginMessages extends JavaPlugin
         }
         catch (NoClassDefFoundError ex)
         {
-            NLog.info("Failed to check for an update.");
+            getLogger().info("Failed to check for an update.");
         }
+    }
+
+    @Override
+    public void onDisable()
+    {
     }
 
     public void registerCommands()
@@ -121,11 +137,6 @@ public class LoginMessages extends JavaPlugin
         reloadConfig();
     }
 
-    public String colorize(String string)
-    {
-        return ChatColor.translateAlternateColorCodes('&', string);
-    }
-
     public static class BuildProperties
     {
         public String author;
@@ -154,8 +165,8 @@ public class LoginMessages extends JavaPlugin
             }
             catch (Exception ex)
             {
-                NLog.severe("Could not load build properties! Did you compile with NetBeans/Maven?");
-                NLog.severe(ex);
+                Bukkit.getLogger().severe("Could not load build properties! Did you compile with NetBeans/Maven?");
+                Bukkit.getLogger().severe(ex.toString());
             }
         }
     }

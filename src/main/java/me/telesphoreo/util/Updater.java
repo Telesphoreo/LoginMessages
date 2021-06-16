@@ -6,13 +6,16 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLConnection;
 import me.telesphoreo.LoginMessages;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
+import static org.bukkit.Bukkit.getServer;
 
-public class Updater
+public class Updater extends LoginMessagesBase
 {
     private LoginMessages plugin;
     private LoginMessages.BuildProperties build = LoginMessages.build;
@@ -44,13 +47,13 @@ public class Updater
 
             if (oldHead.equals("${git.commit.id.abbrev}") || oldHead.equals("unknown"))
             {
-                NLog.info("No Git head detected, not updating LoginMessages.");
+                logger.info("No Git head detected, not updating LoginMessages.");
                 return;
             }
 
             if (newHead.equals(oldHead))
             {
-                NLog.info("There are no updates available.");
+                logger.info("There are no updates available.");
                 return;
             }
 
@@ -68,36 +71,28 @@ public class Updater
 
             out.close();
             in.close();
-            NLog.info("An update to LoginMessages has been applied. (" + oldHead + ") -> " + "(" + newHead + ")");
+            logger.info("An update to LoginMessages has been applied. (" + oldHead + ") -> " + "(" + newHead + ")");
         }
         catch (IOException ex)
         {
-            NLog.info("There was an issue fetching the server for an update.");
+            logger.info("There was an issue connecting to the server to check for updates.");
         }
     }
 
     private String getFilePath()
     {
-        if (plugin instanceof JavaPlugin)
+        try
         {
-            try
-            {
-                Method method = JavaPlugin.class.getDeclaredMethod("getFile");
-                boolean wasAccessible = method.isAccessible();
-                method.setAccessible(true);
-                File file = (File)method.invoke(plugin);
-                method.setAccessible(wasAccessible);
-
-                return file.getPath();
-            }
-            catch (Exception e)
-            {
-                return "plugins" + File.separator + plugin.getName();
-            }
+            JavaPlugin plugin = (JavaPlugin)getServer().getPluginManager().getPlugin(LoginMessages.pluginName);
+            Method getFileMethod = JavaPlugin.class.getDeclaredMethod("getFile");
+            getFileMethod.setAccessible(true);
+            File file = (File)getFileMethod.invoke(plugin);
+            return "plugins" + File.separator + Bukkit.getUpdateFolder() + File.separator + file.getName();
         }
-        else
+        catch (InvocationTargetException | NoSuchMethodException | IllegalAccessException e)
         {
-            return "plugins" + File.separator + "LoginMessages.jar";
+            e.printStackTrace();
         }
+        return "plugins" + File.separator + "LoginMessages.jar";
     }
 }

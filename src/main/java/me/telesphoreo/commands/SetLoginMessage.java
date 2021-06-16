@@ -3,7 +3,6 @@ package me.telesphoreo.commands;
 import me.telesphoreo.LoginMessages;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
