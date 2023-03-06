@@ -27,19 +27,23 @@ public class LoginMessages extends JavaPlugin
     public static String pluginName;
     public static String pluginVersion;
 
-    public String colorize(String message)
-    {
-        if (Bukkit.getBukkitVersion().contains("1.16") || Bukkit.getBukkitVersion().contains("1.17"))
-        {
-            Matcher matcher = pattern.matcher(message);
-            while (matcher.find())
-            {
-                String color = message.substring(matcher.start(), matcher.end());
-                message = message.replace(color, "" + ChatColor.of(color));
+    public static String colorize(String message) {
+        Pattern pattern = Pattern.compile("#[a-fA-F0-9]{6}");
+        Matcher matcher = pattern.matcher(message);
+        while (matcher.find()) {
+            String hexCode = message.substring(matcher.start(), matcher.end());
+            String replaceSharp = hexCode.replace('#', 'x');
+
+            char[] ch = replaceSharp.toCharArray();
+            StringBuilder builder = new StringBuilder("");
+            for (char c : ch) {
+                builder.append("&" + c);
             }
+
+            message = message.replace(hexCode, builder.toString());
+            matcher = pattern.matcher(message);
         }
-        message = ChatColor.translateAlternateColorCodes('&', message);
-        return message;
+        return ChatColor.translateAlternateColorCodes('&', message);
     }
 
     @Override
