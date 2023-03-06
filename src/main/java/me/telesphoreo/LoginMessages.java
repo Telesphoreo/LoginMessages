@@ -10,13 +10,18 @@ import me.telesphoreo.commands.SetLoginMessage;
 import me.telesphoreo.listener.PermissionLoginMessages;
 import me.telesphoreo.listener.PlayerLoginMessages;
 import me.telesphoreo.util.Updater;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.md_5.bungee.api.ChatColor;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.Server;
+import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.NotNull;
 
 public class LoginMessages extends JavaPlugin
 {
@@ -25,24 +30,11 @@ public class LoginMessages extends JavaPlugin
     public static Server server;
     public static String pluginName;
     public static String pluginVersion;
+    private final MiniMessage MINI_MESSAGE = MiniMessage.miniMessage();
 
-    public static String colorize(String message) {
-        Pattern pattern = Pattern.compile("#[a-fA-F0-9]{6}");
-        Matcher matcher = pattern.matcher(message);
-        while (matcher.find()) {
-            String hexCode = message.substring(matcher.start(), matcher.end());
-            String replaceSharp = hexCode.replace('#', 'x');
-
-            char[] ch = replaceSharp.toCharArray();
-            StringBuilder builder = new StringBuilder("");
-            for (char c : ch) {
-                builder.append("&" + c);
-            }
-
-            message = message.replace(hexCode, builder.toString());
-            matcher = pattern.matcher(message);
-        }
-        return ChatColor.translateAlternateColorCodes('&', message);
+    public Component mmDeserialize(String message)
+    {
+        return MINI_MESSAGE.deserialize(message).clickEvent(null).hoverEvent(null);
     }
 
     @Override
@@ -94,8 +86,8 @@ public class LoginMessages extends JavaPlugin
         {
             getConfig().createSection("players." + player.getName());
         }
-        player.sendMessage(ChatColor.GRAY + "Your login message is now:");
-        player.sendMessage(ChatColor.GRAY + "> " + ChatColor.RESET + colorize(message.replace("%player%", player.getName())));
+        player.sendMessage(mmDeserialize("<gray>Your login message is now:"));
+        player.sendMessage(mmDeserialize("<gray>> " + message.replace("%player%", player.getName())));
         getConfig().set("players." + player.getName() + ".message", message);
         saveConfig();
         reloadConfig();
@@ -107,8 +99,8 @@ public class LoginMessages extends JavaPlugin
         {
             getConfig().createSection("players." + player.getName());
         }
-        sender.sendMessage(ChatColor.GRAY + player.getName() + "'s login message is now:");
-        sender.sendMessage(ChatColor.GRAY + "> " + ChatColor.RESET + colorize(message.replace("%player%", player.getName())));
+        player.sendMessage(mmDeserialize("<gray>" + player.getName() + "'s login message is now:"));
+        player.sendMessage(mmDeserialize("<gray>> " + message.replace("%player%", player.getName())));
         getConfig().set("players." + player.getName() + ".message", message);
         saveConfig();
         reloadConfig();
@@ -118,10 +110,10 @@ public class LoginMessages extends JavaPlugin
     {
         if (getConfig().get("players." + player.getName()) == null)
         {
-            player.sendMessage(ChatColor.RED + "You do not have a login message set.");
+            player.sendMessage(mmDeserialize("<red>You do not have a login message set."));
             return;
         }
-        player.sendMessage(ChatColor.GRAY + "Your login message has been removed.");
+        player.sendMessage(mmDeserialize("<gray>Your login message has been removed."));
         getConfig().set("players." + player.getName(), null);
         saveConfig();
         reloadConfig();
@@ -131,10 +123,10 @@ public class LoginMessages extends JavaPlugin
     {
         if (getConfig().get("players." + player.getName()) == null)
         {
-            sender.sendMessage(ChatColor.RED + player.getName() + " does not have a login message set.");
+            sender.sendMessage(mmDeserialize("<red>" + player.getName() + " does not have a login message set."));
             return;
         }
-        sender.sendMessage(ChatColor.GRAY + player.getName() + "'s login message has been removed.");
+        sender.sendMessage(mmDeserialize("<gray>" + player.getName() + "'s login message has been removed."));
         getConfig().set("players." + player.getName(), null);
         saveConfig();
         reloadConfig();

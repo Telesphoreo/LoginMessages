@@ -4,7 +4,6 @@ import java.util.Collections;
 import java.util.List;
 import me.telesphoreo.LoginMessages;
 import me.telesphoreo.util.LoginMessagesBase;
-import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -18,18 +17,10 @@ public class LoginMessagesCommand extends LoginMessagesBase implements CommandEx
         if (args.length == 0)
         {
             LoginMessages.BuildProperties build = LoginMessages.build;
-            sender.sendMessage(ChatColor.GOLD + "LoginMessages is a lightweight plugin that allows players to have a custom join message.");
-            sender.sendMessage(ChatColor.GOLD + String.format("Version "
-                            + ChatColor.BLUE + "%s.%s.%s",
-                    build.version,
-                    build.number,
-                    build.head));
-            sender.sendMessage(String.format(ChatColor.GOLD + "Compiled on "
-                            + ChatColor.BLUE + "%s" + ChatColor.GOLD + " by "
-                            + ChatColor.BLUE + "%s",
-                    build.date,
-                    build.author));
-            sender.sendMessage(ChatColor.GREEN + "Visit " + ChatColor.AQUA + "https://github.com/Telesphoreo/LoginMessages" + ChatColor.GREEN + " for more information");
+            sender.sendMessage(plugin.mmDeserialize("<gold>LoginMessages is a lightweight plugin that allows players to have a custom join message."));
+            sender.sendMessage(plugin.mmDeserialize("<gold>Version <blue>" + String.format("%s.%s.%s", build.version, build.number, build.head)));
+            sender.sendMessage(plugin.mmDeserialize("<gold>Compiled on <blue>" + String.format("%s" + " <gold>by <blue>" + "%s", build.date, build.author)));
+            sender.sendMessage(plugin.mmDeserialize("<green>Visit <aqua>https://github.com/Telesphoreo/LoginMessages <green>for more information."));
             return true;
         }
         if (args[0].equalsIgnoreCase("reload"))

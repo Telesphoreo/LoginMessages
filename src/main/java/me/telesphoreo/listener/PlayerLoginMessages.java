@@ -2,6 +2,7 @@ package me.telesphoreo.listener;
 
 import java.util.Map;
 import me.telesphoreo.util.LoginMessagesBase;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -11,7 +12,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 public class PlayerLoginMessages extends LoginMessagesBase implements Listener
 {
     @EventHandler
-    public boolean onPlayerJoin(PlayerJoinEvent event)
+    public void onPlayerJoin(PlayerJoinEvent event)
     {
         Player player = event.getPlayer();
         try
@@ -21,7 +22,7 @@ public class PlayerLoginMessages extends LoginMessagesBase implements Listener
 
             for (String playerKeys : player_login_messages.keySet())
             {
-                String message = (String)plugin.getConfig().get("players." + player.getName() + ".message");
+                String message = plugin.getConfig().getString("players." + player.getName() + ".message");
                 if (playerKeys.contains(player.getName()))
                 {
                     if (message == null)
@@ -32,15 +33,13 @@ public class PlayerLoginMessages extends LoginMessagesBase implements Listener
                     if (!vanilla_join_msg)
                     {
                         // Set the join message
-                        event.setJoinMessage(plugin.colorize(message.replace("%player%", player.getName())));
-                        // Log it
-                        logger.info(plugin.colorize(message.replace("%player%", player.getName())));
+                        event.joinMessage(plugin.mmDeserialize((message.replace("%player%", player.getName()))));
                         break;
                     }
                     else
                     {
                         // Just broadcast it instead
-                        Bukkit.broadcastMessage(plugin.colorize(message.replace("%player%", player.getName())));
+                        Bukkit.broadcast(plugin.mmDeserialize(message.replace("%player%", player.getName())));
                         break;
                     }
                 }
@@ -51,6 +50,5 @@ public class PlayerLoginMessages extends LoginMessagesBase implements Listener
             logger.severe("Failed to load login messages.");
             logger.severe(ex.toString());
         }
-        return true;
     }
 }

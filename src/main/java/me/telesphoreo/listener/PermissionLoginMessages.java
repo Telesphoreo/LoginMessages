@@ -20,7 +20,7 @@ public class PermissionLoginMessages extends LoginMessagesBase implements Listen
     }
 
     @EventHandler
-    public boolean onPlayerJoin(PlayerJoinEvent event)
+    public void onPlayerJoin(PlayerJoinEvent event)
     {
         Player player = event.getPlayer();
         try
@@ -31,8 +31,8 @@ public class PermissionLoginMessages extends LoginMessagesBase implements Listen
             for (String key : login_messages.keySet())
             {
                 MemorySection login = (MemorySection)login_messages.get(key);
-                String permission = (String)login.get("permission");
-                String message = (String)login.get("message");
+                String permission = login.getString("permission");
+                String message = login.getString("message");
                 if (hasPermission(player, permission) && !player_login_messages.keySet().contains(player.getName()))
                 {
                     if (message == null)
@@ -43,14 +43,13 @@ public class PermissionLoginMessages extends LoginMessagesBase implements Listen
                     if (!vanilla_join_msg)
                     {
                         // Set the join message
-                        event.setJoinMessage(plugin.colorize(message.replace("%player%", player.getName())));
-                        logger.info(plugin.colorize(message.replace("%player%", player.getName())));
+                        event.joinMessage(plugin.mmDeserialize(message.replace("%player%", player.getName())));
                         break;
                     }
                     else
                     {
                         // Just broadcast it instead
-                        Bukkit.broadcastMessage(plugin.colorize(message.replace("%player%", player.getName())));
+                        Bukkit.broadcast(plugin.mmDeserialize(message.replace("%player%", player.getName())));
                         break;
                     }
                 }
@@ -61,6 +60,5 @@ public class PermissionLoginMessages extends LoginMessagesBase implements Listen
             logger.severe("Failed to load login messages.");
             logger.severe(ex.toString());
         }
-        return true;
     }
 }

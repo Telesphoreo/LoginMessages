@@ -1,5 +1,5 @@
 #
-# LoginMessages v2.3
+# LoginMessages v3.0
 #
 # There are two sections: ranks and players
 # The ranks are permission based. Some example ranks are already created, but you can
@@ -8,38 +8,38 @@
 # Example:
 # SuperAdmin:
 #   permission: loginmessages.superadmin
-#   message: "&b%player% is a &oSuper Admin"
+#   message: "<aqua>%player% is a <italic>Super Admin"
 #
 # The player section is designed for a player to have their own login message.
 # This is not permission based, but rather username based. Use %player% to display their name when they log in.
 # Note that if a user has a player login message, they will not be able to use the ranks
 # Example:
 # Madgeek1450:
-#   message: "&b%player% is a &6Master-ass-kicker&b."
+#   message: "<aqua>%player% is a <gold>Master-ass-kicker<aqua>."
 #
 ranks:
   Moderator:
     permission: loginmessages.moderator
-    message: "&b%player% is a &d&oModerator"
+    message: "<aqua>%player% is a <purple><italic>Moderator"
   Admin:
     permission: loginmessages.admin
-    message: "&b%player% is an &4&oAdmin"
+    message: "<aqua>%player% is an <dark_red><italic>Admin"
   Builder:
     permission: loginmessages.builder
-    message: "&b%player% is a &oBuilder"
+    message: "<aqua>%player% is a <italic>Builder"
   Developer:
     permission: loginmessages.developer
-    message: "&b%player% is a &5&oDeveloper"
+    message: "<aqua>%player% is a <dark_purple><italic>Developer"
   Owner:
     permission: loginmessages.owner
-    message: "&b%player% is the &4&oOwner"
+    message: "<aqua>%player% is the <dark_red><italic>Owner"
 players:
   Telesphoreo:
-    message: "&bThe %player% it's in the?"
+    message: "<aqua>The %player% it's in the?"
   yashi4554:
-    message: "&b%player% is an &4&oAdmin&b and the &9The Supreme Builder"
+    message: "<aqua>%player% is an <dark_red><italic>Admin&b and the <light_blue>The Supreme Builder"
   OxLemonxO:
-    message: "&b%player% is the &4Ki&5ng &6Of &5Le&6mo&7ns&b!"
+    message: "<aqua>%player% is the <dark_red>Ki<dark_purple>ng <gold>Of <dark_purple>Le<gold>mo<gray>ns<aqua>!"
 
 # Should the vanilla "joined the game" message show?
 show_vanilla_messages: false
