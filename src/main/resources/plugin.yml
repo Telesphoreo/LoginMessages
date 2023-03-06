@@ -3,7 +3,7 @@ version: ${project.version}
 description: A simple, lightweight plugin to easily create login messages
 author: Telesphoreo
 main: me.telesphoreo.LoginMessages
-api-version: 1.13
+api-version: 1.19
 commands:
   loginmessages:
     usage: /<command> [reload]
