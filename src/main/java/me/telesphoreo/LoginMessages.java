@@ -21,7 +21,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class LoginMessages extends JavaPlugin
 {
     public static final BuildProperties build = new BuildProperties();
-    private static final Pattern pattern = Pattern.compile("(?<!\\\\)(#[a-fA-F0-9]{6})");
     public static LoginMessages plugin;
     public static Server server;
     public static String pluginName;
