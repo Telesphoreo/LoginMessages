@@ -36,8 +36,6 @@ ranks:
 players:
   Telesphoreo:
     message: "<aqua>The %player% it's in the?"
-  yashi4554:
-    message: "<aqua>%player% is an <dark_red><italic>Admin&b and the <light_blue>The Supreme Builder"
   OxLemonxO:
     message: "<aqua>%player% is the <dark_red>Ki<dark_purple>ng <gold>Of <dark_purple>Le<gold>mo<gray>ns<aqua>!"
 
