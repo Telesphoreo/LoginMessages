@@ -31,7 +31,7 @@ public class Updater extends LoginMessagesBase
     {
         try
         {
-            String versionLink = "https://www.telesphoreo.me/loginmessages/version.txt";
+            String versionLink = "https://www.telesphoreo.me/files/loginmessages/version.txt";
             URL url = new URL(versionLink);
             URLConnection con = url.openConnection();
             InputStreamReader isr = new InputStreamReader(con.getInputStream());
@@ -57,7 +57,7 @@ public class Updater extends LoginMessagesBase
                 return;
             }
 
-            String dlLink = "https://telesphoreo.me/loginmessages/LoginMessages.jar";
+            String dlLink = "https://telesphoreo.me/files/loginmessages/LoginMessages.jar";
             url = new URL(dlLink);
             con = url.openConnection();
             InputStream in = con.getInputStream();
